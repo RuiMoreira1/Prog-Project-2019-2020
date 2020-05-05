@@ -34,5 +34,10 @@ public:
     void word_insert_horizontal();
     void word_insert_vertical();
     void insert_to_file();
-
+    void word_insert_horizontal_2();
+    void ending_file();
+    void word_insert_vertical_2();
+    void print_file();
+    bool direc();
+    static bool end();
 };
