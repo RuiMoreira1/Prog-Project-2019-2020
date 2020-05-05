@@ -57,7 +57,7 @@ void Board::test() {
 
 //Direction of the word input by user
 void coord_input(string &dir){
-    cin.ignore(numeric_limits<streamsize>::max(),'\n'); // Clean the buffer from cin, so that getline doesn't get an error
+    //cin.ignore(1000,'\n'); // Clean the buffer from cin, so that getline doesn't get an error
     while(true){
         getline(cin,dir,'\n');
         transform(dir.begin(),dir.end(),dir.begin(),::toupper);
@@ -157,25 +157,14 @@ void Board::insert_to_file(){
 
 
 
-/*
-bool invalid_cross_horizontal(vector<tuple<int,int,string,string>> &v, int row_c, int col_c){
-    for(tuple<int,int,string,string> &it : v){
-        if(get<2>(it) == "HORIZONTAL"){
-            cout << "Working" << endl;
-
-        }
-    }
-}
-*/
-
 
 //Check whether or not it is possible to insert the word in the desired coordinates (INDENTATION TO HIGH!)
 bool invalid_cross_vertical(vector<tuple<int,int,string,string>> &v, int row_c, int col_c, int length, const string word){
     for(auto it = v.begin(); it != v.end(); it++){
-        if(word == get<2>(*it)){                          //Avoiding duplicates in the board
+        /*if(word == get<2>(*it)){                          //Avoiding duplicates in the board
             cout << "Duplicate" << endl;
             return false;
-        }
+        }*/
         if(get<3>(*it) == "VERTICAL"){
             if(get<1>(*it) == col_c && get<0>(*it) == row_c){
                 cout << "Your word can't be inserted there" << endl;
@@ -286,3 +275,49 @@ void Board::word_insert_vertical(){
         if(insert) insert_to_file();
     }
 }
+
+
+
+bool Board::end(){
+    string over_check;
+    cout << "If you want to end the word insertion write end, else write go" << endl;
+    cin.ignore(1000,'\n');
+    while(true){
+        getline(cin, over_check,'\n');
+        transform(over_check.begin(),over_check.end(),over_check.begin(),::tolower);
+        if(over_check == "end") return true;
+        if(over_check == "go") return false;
+    }
+}
+
+bool Board::direc(){
+    return (direction == "HORIZONTAL");
+}
+
+
+void Board::ending_file() {
+    try{
+        fstream file;
+        file.open("nice.txt", ios::out , ios::trunc);
+        if(file.is_open()){
+            file << rows << " x " << columns << endl;
+            for(auto & it : to_file){
+                file << char(get<0>(it)+64) <<  char(get<1>(it)+96) << " " << get<3>(it)[0] << " " << get<2>(it) << endl;
+            }
+            file.close();
+        }
+        else throw ios::failure("Error while opening file\n");
+    }
+    catch(const exception &ex) {
+        cerr << ex.what() << endl;
+        exit(1);
+    }
+
+}
+
+void Board::print_file(){
+    for(auto &i : to_file){
+        cout << get<0>(i) << " " << get<1>(i) << " " << get<3>(i)[0] << " " << get<2>(i) << endl;
+    }
+}
+
