@@ -49,7 +49,7 @@ void BOARD::split_string(){
 //TEST FUNCTION [DELETED] WHEN DELIVERING THE PROJECT
 void BOARD::test(){
     for(vector<string> &it : board_input){
-        cout << it[0] << endl << it[1] << endl << it[2] << endl << endl;
+        cout << it[0] << " " << it[1] << " " << it[2] << " " << endl;
     }
 };
 
@@ -89,9 +89,9 @@ void BOARD::Print_Board() const{
             cout << "|";
         else cout << " ";
         for(int j = 0; j < columns+1; j++){
-            if(storage_copy[i][j] == '#'){
+            /*if(storage_copy[i][j] == '#'){
                 cout << " " << storage[i][j] << " |"; // IF THE LETTER WAS CHANGED PRINT IT IN another colour!!!
-            }
+            }*/
             cout << " " << storage[i][j] << " |";
         }
         cout << endl;
@@ -149,4 +149,20 @@ bool BOARD::complete_word(){
             }
         }
     }
+}
+
+
+void BOARD::vectors(){
+    for(int i = 1; i < board_input.size();i++){
+        words.push_back(board_input[i][2]);
+        for(char &str: board_input[i][2]){
+            soup.push_back(str);
+        }
+        coords.emplace_back(make_pair(board_input[i][0][0]-64,board_input[i][0][1]-96));
+        direction.push_back(board_input[i][1]);
+    }
+}
+
+void BOARD::vector_test() {
+    cout << coords[0].first << endl;
 }
