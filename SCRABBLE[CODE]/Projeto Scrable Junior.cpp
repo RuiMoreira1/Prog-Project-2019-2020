@@ -1,6 +1,4 @@
-// Ja corre sem erros, pelo menos do que sei, falta agora as cores e saber quando um jogador não pode jogar.
-// PS: Falta tambem melhorar o gaming loop mas isso é facil, ou seja so mais 3 coisas e acabamos a versão desorganizada do trabalho
-
+//Falta as cores, organização e score board
 #include <iostream>
 #include <iostream>
 #include <vector>
@@ -414,14 +412,52 @@ void Check_Completion(vector<int> words, Player p, Pool po)
         }
     }
 }
+bool Play_Possibility(Player p, Pool po)
+{
+    vector<char> v;
+    for (int i = 0; i < po.Get_Size_w(); i++)
+    {
+        for (int a = 0; po.Get_word_copy(i).length(); a++)
+        {
+            string temp;
+            temp = po.Get_word_copy(i);
+            if (temp[a] != '#')
+            {
+                v.push_back(temp[a]);
+                break;
+            }
+        }
+
+    }
+    for (int i = 0; i < p.Get_H_Size(); i++)
+    {
+        for (int a = 0; a < v.size(); a++)
+        {
+            if (p.GetHand(i) == v[a])
+            {
+                return true;
+            }
+        }
+
+    }
+    return false;
+
+}
 void Vez(Player& y, Pool& p)
 {
+    while (Play_Possibility(y, p) == false)
+    {
+        y.Remove_from_Hand(0);
+        y.SetHand(p.Give_Tile(1));
+        cout << "A hand foi mudada" << endl;
+
+    }
     for (int i = 0; i < p.Get_Size_w(); i++)
     {
         cout << p.Get_word_copy(i) << " ";
     }
     cout << endl;
-    cout << "As pecas do jogador são:" << endl;
+    cout << "As pecas do jogador sao:" << endl;
     for (int i = 0; i < y.Get_H_Size(); i++)
     {
         cout << y.GetHand(i) << " ";
@@ -472,13 +508,9 @@ int main()
     nice.Build_Board();
     nice.Print_Board();
     nice.vectors();
-    vector<Player> p;
     Pool po;
     Player p1, p2, p3, p4;
-    p.push_back(p1);
-    p.push_back(p2);
-    p.push_back(p3);
-    p.push_back(p4);
+    vector<Player> p = {p1, p2, p3, p4};
     size_t size;
     po.FormPool();
     po.Form_init_coor();
@@ -513,21 +545,33 @@ int main()
             break;
         }
     }
-    while (po.Get_Size() > 0)
+    int end_con = 0;
+    for (int i = 0; i < size; i++)
     {
+        end_con = p[i].Get_H_Size() + end_con;
+    }
+    while (end_con > 0)
+    {
+        end_con = 0;
         for (int i = 0; i < size; i++)
         {
+            int flg = 0;
             cout << "Jogador " << i + 1 << " --------------" << endl;
             Vez(p[i], po);
-            if (po.Get_Size() <= 0)
+            Vez(p[i], po);
+            if (po.Get_Size() > 2)
             {
-                break;
+                p[i].SetHand(po.Give_Tile(i));
+                p[i].SetHand(po.Give_Tile(i));
+                flg = 1;
+            }
+            if (po.Get_Size() > 1 && flg == 0)
+            {
+                p[i].SetHand(po.Give_Tile(i));
             }
             nice.Build_Board();
             nice.Print_Board();
-            Vez(p[i], po);
-            p[i].SetHand(po.Give_Tile(i));
-            p[i].SetHand(po.Give_Tile(i));
+            end_con = p[i].Get_H_Size() + end_con;
         }
 
 
