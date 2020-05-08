@@ -1,3 +1,6 @@
+// Ja corre sem erros, pelo menos do que sei, falta agora as cores e saber quando um jogador não pode jogar.
+// PS: Falta tambem melhorar o gaming loop mas isso é facil, ou seja so mais 3 coisas e acabamos a versão desorganizada do trabalho
+
 #include <iostream>
 #include <iostream>
 #include <vector>
@@ -51,6 +54,7 @@ public:
     void SetToken(int points);
     int GetTokens() const;
     int Get_H_Size() const;
+    void Remove_from_Hand(int num);
 private:
     int token;
     int description;
@@ -87,6 +91,10 @@ int Player::GetTokens() const
 int Player::Get_H_Size() const
 {
     return hand.size();
+}
+void Player::Remove_from_Hand(int num)
+{
+    hand.erase(hand.begin() + num);
 }
 Pool::Pool()
 {
@@ -267,7 +275,7 @@ void Translate(vector<int>& v, string g)
     }
     for (int a = 0; a < abc.size(); a++)
     {
-        if (g[0] == abc[a])
+        if (g[1] == abc[a])
         {
             v.push_back(a + 1);
         }
@@ -289,10 +297,13 @@ void Find_Word(vector<int>& v, vector<int> v2, Pool po)
 }
 bool Valid_Play(vector<int> word, vector<int> coor, Pool po)
 {
+    int d = 0;
+    vector<int> v;
     for (int i = 0; i < word.size(); i++)
     {
         for (int a = 0; a < po.Get_word_copy(word[i]).length(); a++)
         {
+            
             if (po.Get_all_coor1(word[i], a) == coor[0] && po.Get_all_coor2(word[i], a) == coor[1])
             {
                 string temp = po.Get_word_copy(word[i]);
@@ -304,13 +315,29 @@ bool Valid_Play(vector<int> word, vector<int> coor, Pool po)
                 {
                     if (temp[x] != '#')
                     {
-                        return false;
+                        d = 1;
+                        v.push_back(1);
+                        break;
                     }
                 }
-                return true;
+                if (d == 0)
+                {
+                    v.push_back(0);
+                }
+                d = 0;
+                
             }
         }
     }
+    for (int u = 0; u < v.size(); u++)
+    {
+        if (v[u] == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+
 }
 char Letter_Finder(vector<int> v,vector<int> coor, Pool po)
 {
@@ -330,9 +357,20 @@ char Letter_Finder(vector<int> v,vector<int> coor, Pool po)
         }
     }
 }
+bool Hand_Cheacker(vector<int> v, vector<int> coor, Pool p, Player pr)
+{
+    for (int i = 0; i < pr.Get_H_Size(); i++)
+    {
+        if (pr.GetHand(i) == Letter_Finder(v, coor, p))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po)
 {
-    Find_Word(word, vf, po);
+    
     if (word.size() == 0)
     {
         return false;
@@ -342,7 +380,7 @@ bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po)
         return true;
     }
 }
-void Hash_Helper(vector<int> word, vector<int> coor, Pool po)
+void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p)
 {
     for (int i = 0; i < word.size(); i++)
     {
@@ -351,12 +389,38 @@ void Hash_Helper(vector<int> word, vector<int> coor, Pool po)
             if (po.Get_all_coor1(word[i], a) == coor[0] && po.Get_all_coor2(word[i], a) == coor[1])
             {
                 po.Set_to_Hash(word[i], a);
+                // Remove The tile from hand
             }
         }
     }
 }
-void Vez(Player y, Pool p)
+void Check_Completion(vector<int> words, Player p, Pool po)
 {
+    for (int i = 0; i < words.size(); i++)
+    {
+        int flg = 0;
+        for (int a = 0; a < po.Get_word_copy(words[i]).length(); a++)
+        {
+            string temp = po.Get_word_copy(words[i]);
+            if (temp[a] != '#')
+            {
+                flg = 1;
+            }
+        }
+        if (flg == 0)
+        {
+            p.SetToken(p.GetTokens() + 1);
+            cout << "Player " << p.GetNum() << " - " << p.GetTokens() << endl;
+        }
+    }
+}
+void Vez(Player& y, Pool& p)
+{
+    for (int i = 0; i < p.Get_Size_w(); i++)
+    {
+        cout << p.Get_word_copy(i) << " ";
+    }
+    cout << endl;
     cout << "As pecas do jogador são:" << endl;
     for (int i = 0; i < y.Get_H_Size(); i++)
     {
@@ -369,15 +433,30 @@ void Vez(Player y, Pool p)
     cin >> player_coor;
     Translate(tranlated, player_coor);
     vector<int> word;
-    while (Check_Coor(word, tranlated, y, p) != true && Letter_Finder(word, tranlated, p) == '#' && Valid_Play(word, tranlated, p) == false)
+    Find_Word(word, tranlated, p);
+    cout << tranlated[0] << tranlated[1] << endl;
+    while (Check_Coor(word, tranlated, y, p) == false || Letter_Finder(word, tranlated, p) == '#' || Valid_Play(word, tranlated, p) == false || Hand_Cheacker(word, tranlated, p, y) != true)
     {
-        cout << "Nao tem essa letra!" << endl;
+        cout << "Cordenadas invalidas!" << endl;
         cout << "Onde quer jogar? ";
         cin >> player_coor;
+        tranlated = {};
+        Translate(tranlated, player_coor);
+        word = {};
+        Find_Word(word, tranlated, p);
     }
     if (Valid_Play(word, tranlated, p) == true)
     {
-        Hash_Helper(word, tranlated, p);
+        for (int i = 0; i < y.Get_H_Size(); i++)
+        {
+            if (Letter_Finder(word, tranlated, p) == y.GetHand(i))
+            {
+                y.Remove_from_Hand(i);
+                break;
+            }
+        }
+        Hash_Helper(word, tranlated, p, y);
+        Check_Completion(word, y, p);
     }
     
 }
@@ -436,7 +515,20 @@ int main()
     }
     while (po.Get_Size() > 0)
     {
-
+        for (int i = 0; i < size; i++)
+        {
+            cout << "Jogador " << i + 1 << " --------------" << endl;
+            Vez(p[i], po);
+            if (po.Get_Size() <= 0)
+            {
+                break;
+            }
+            nice.Build_Board();
+            nice.Print_Board();
+            Vez(p[i], po);
+            p[i].SetHand(po.Give_Tile(i));
+            p[i].SetHand(po.Give_Tile(i));
+        }
 
 
     }
