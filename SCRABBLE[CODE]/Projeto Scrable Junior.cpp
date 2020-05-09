@@ -30,6 +30,7 @@ public:
     int Get_w_Size(int num) const;
     void Vector_Copy();
     void Set_to_Hash(int word_n, int letter);
+    void Add_to_Pool(char x);
 private:
     vector<char> tiles;
     vector<int> ini_coor1;
@@ -248,6 +249,10 @@ int Pool::Get_Size() const
 {
     return tiles.size();
 }
+void Pool::Add_to_Pool(char x)
+{
+    tiles.push_back(x);
+}
 int Pool::Get_Size_w() const
 {
     return w.size();
@@ -392,7 +397,7 @@ void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p)
         }
     }
 }
-void Check_Completion(vector<int> words, Player p, Pool po)
+void Check_Completion(vector<int> words, Player& p, Pool po)
 {
     for (int i = 0; i < words.size(); i++)
     {
@@ -429,6 +434,11 @@ bool Play_Possibility(Player p, Pool po)
         }
 
     }
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
     for (int i = 0; i < p.Get_H_Size(); i++)
     {
         for (int a = 0; a < v.size(); a++)
@@ -447,8 +457,9 @@ void Vez(Player& y, Pool& p)
 {
     while (Play_Possibility(y, p) == false)
     {
+        p.Add_to_Pool(y.GetHand(0));
         y.Remove_from_Hand(0);
-        y.SetHand(p.Give_Tile(1));
+        y.SetHand(p.Give_Tile(3));
         cout << "A hand foi mudada" << endl;
 
     }
