@@ -517,7 +517,6 @@ int main()
     nice.storage_init();
     nice.Fill_Cord();
     nice.Build_Board();
-    nice.Print_Board();
     nice.vectors();
     Pool po;
     Player p1, p2, p3, p4;
@@ -568,7 +567,9 @@ int main()
         {
             int flg = 0;
             cout << "Jogador " << i + 1 << " --------------" << endl;
+            nice.Print_Board();
             Vez(p[i], po);
+            nice.Print_Board();
             Vez(p[i], po);
             if (po.Get_Size() > 2)
             {
