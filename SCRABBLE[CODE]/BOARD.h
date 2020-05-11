@@ -14,12 +14,13 @@ private:
     vector<vector<string>> board_input; // {{STRING},{STRING},{STRING},....} STRING == "row_coord_col_cord", "direction", "word", "whitespace"
     vector<vector<char>> storage, storage_copy;
     vector<string> words, direction; //WORDS-> WORDS IN THE FILE ||||| DIRECTION -> DIRECTION OF THE WORDS IN THE FILE
-    vector<pair<int,int>> coords; //TO ACCESS ELEMENT coords[i].first 1st element coords[i].second 2nd element
+    vector<pair<int, int>> coords; //TO ACCESS ELEMENT coords[i].first 1st element coords[i].second 2nd element
     vector<char> soup; //POOL WITH ALL THE CHARS OF THE WORDS IN THE FILE
     char row_board = 65, column_board = 97; //ASCII CODE OF A and a to put in the board
-    int rows,columns;
+    int rows, columns;
+    friend class Pool;
 public:
-    BOARD(){
+    BOARD() {
         rows = 0; columns = 0;
     }
     void open_file();                     //FILE OPENING
@@ -36,7 +37,3 @@ public:
     void vectors();
     void vector_test();
 };
-
-
-
-
