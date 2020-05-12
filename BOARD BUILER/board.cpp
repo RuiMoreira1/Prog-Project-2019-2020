@@ -379,7 +379,7 @@ void Board::ending_file() {
     sort(to_file.begin(),to_file.end(), my_sort);                              //applying the sort function to to_file vector
     try{
         fstream file;
-        file.open("nice.txt", ios::out , ios::trunc);
+        file.open("BOARD.txt", ios::out , ios::trunc);
         if(file.is_open()){
             file << rows << " x " << columns << endl;
             for(auto & it : to_file){
@@ -404,6 +404,6 @@ void Board::print_file(){
     }
 }
 
-//CREATED BY RUIMOREIRA
+//CREATED BY RUI_MOREIRA
 
 
