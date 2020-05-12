@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <time.h>  
-#include <stdlib.h> 
+#include <time.h>
+#include <stdlib.h>
 #include "BOARD.h"
 using namespace std;
 
