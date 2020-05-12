@@ -1,32 +1,30 @@
 #include "Pool.h"
-#include "Player.h"
-#include <iostream>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <time.h>  
-#include <stdlib.h> 
-#include "BOARD.h"
-using namespace std;
+
 
 Pool::Pool()
 {
 
 }
+void Pool::init_class() {
+    var.open_file();
+    var.board_input_init();
+    var.split_string();
+    var.board_size();
+    var.storage_init();
+    var.Fill_Cord();
+    var.Build_Board();
+    var.matrix_copy();
+    var.vectors();
+    var.Print_Board();
+}
+void Pool::Print_Board(){
+    var.Print_Board();
+};
 void Pool::FormPool()
 {
-    BOARD n;
-    n.open_file();
-    n.board_input_init();
-    n.split_string();
-    n.board_size();
-    n.storage_init();
-    n.Fill_Cord();
-    n.Build_Board();
-    n.vectors();
-    for (int i = 0; i < n.soup.size(); i++)
+    for (int i = 0; i < var.soup.size(); i++)
     {
-        tiles.push_back(n.soup[i]);
+        tiles.push_back(var.soup[i]);
     }
 }
 char Pool::GetTiles(int num) const
@@ -35,19 +33,10 @@ char Pool::GetTiles(int num) const
 }
 void Pool::Form_init_coor()
 {
-    BOARD n;
-    n.open_file();
-    n.board_input_init();
-    n.split_string();
-    n.board_size();
-    n.storage_init();
-    n.Fill_Cord();
-    n.Build_Board();
-    n.vectors();
-    for (int i = 0; i < n.coords.size(); i++)
+    for (int i = 0; i < var.coords.size(); i++)
     {
-        ini_coor1.push_back(n.coords[i].first);
-        ini_coor2.push_back(n.coords[i].second);
+        ini_coor1.push_back(var.coords[i].first);
+        ini_coor2.push_back(var.coords[i].second);
     }
 }
 int Pool::Get_init_coor1(int num) const
@@ -60,18 +49,9 @@ int Pool::Get_init_coor2(int num) const
 }
 void Pool::Form_word()
 {
-    BOARD n;
-    n.open_file();
-    n.board_input_init();
-    n.split_string();
-    n.board_size();
-    n.storage_init();
-    n.Fill_Cord();
-    n.Build_Board();
-    n.vectors();
-    for (int i = 0; i < n.words.size(); i++)
+    for (int i = 0; i < var.words.size(); i++)
     {
-        w.push_back(n.words[i]);
+        w.push_back(var.words[i]);
     }
 }
 string Pool::Get_word(int num) const
@@ -84,18 +64,9 @@ string Pool::Get_word_copy(int num) const
 }
 void Pool::Form_direc()
 {
-    BOARD n;
-    n.open_file();
-    n.board_input_init();
-    n.split_string();
-    n.board_size();
-    n.storage_init();
-    n.Fill_Cord();
-    n.Build_Board();
-    n.vectors();
-    for (int i = 0; i < n.direction.size(); i++)
+    for (int i = 0; i < var.direction.size(); i++)
     {
-        dire.push_back(n.direction[i]);
+        dire.push_back(var.direction[i]);
     }
 }
 string Pool::Get_direc(int num) const
@@ -182,7 +153,8 @@ int Pool::Get_w_Size(int num) const
 {
     return w[num].length();
 }
-void Pool::Set_to_Hash(int word_n, int letter)
+void Pool::Set_to_Hash(int word_n, int letter, string player_coor)
 {
     w_copy[word_n][letter] = '#';
+    var.storage_copy[player_coor[0]-64][player_coor[1]-96] = '#';
 }
