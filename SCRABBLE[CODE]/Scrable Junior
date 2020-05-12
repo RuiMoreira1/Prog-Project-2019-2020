@@ -1,9 +1,10 @@
 #include <iostream>
 #include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
-#include <time.h>  
-#include <stdlib.h> 
+#include <time.h>
+#include <stdlib.h>
 #include "BOARD.h"
 #include "Player.h"
 #include "Pool.h"
@@ -127,7 +128,7 @@ bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po)
         return true;
     }
 }
-void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p)
+void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p, string player_coor)
 {
     for (int i = 0; i < word.size(); i++)
     {
@@ -135,7 +136,7 @@ void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p)
         {
             if (po.Get_all_coor1(word[i], a) == coor[0] && po.Get_all_coor2(word[i], a) == coor[1])
             {
-                po.Set_to_Hash(word[i], a);
+                po.Set_to_Hash(word[i], a, player_coor);
                 // Remove The tile from hand
             }
         }
@@ -220,7 +221,7 @@ void Vez(Player& y, Pool& p)
     cout << '\n';
     string player_coor;
     vector<int> tranlated;
-    cout << "Onde quer jogar? ";
+    cout << "Onde quer jogar? " << endl;
     cin >> player_coor;
     Translate(tranlated, player_coor);
     vector<int> word;
@@ -246,7 +247,7 @@ void Vez(Player& y, Pool& p)
                 break;
             }
         }
-        Hash_Helper(word, tranlated, p, y);
+        Hash_Helper(word, tranlated, p, y, player_coor);
         Check_Completion(word, y, p);
         p.Set_All(tranlated);
     }
@@ -254,31 +255,23 @@ void Vez(Player& y, Pool& p)
 }
 int main()
 {
-    BOARD nice;
-    nice.open_file();
-    nice.board_input_init();
-    nice.split_string();
-    nice.board_size();
-    nice.storage_init();
-    nice.Fill_Cord();
-    nice.Build_Board();
-    nice.vectors();
     Pool po;
     Player p1, p2, p3, p4;
     vector<Player> p = { p1, p2, p3, p4 };
     size_t size;
+    po.init_class(); //Initializing class members
     po.FormPool();
     po.Form_init_coor();
     po.Form_word();
     po.Form_direc();
     po.Form_all_coor();
     po.Vector_Copy();
-    cout << "Quantos jogadores? ";
+    cout << "Quantos jogadores? " << endl;
     cin >> size;
     while (!cin || ((size > 4) || (size < 2)))
     {
         cin.clear();
-        cin.ignore(numeric_limits <streamsize>::max(), '\n');
+        cin.ignore(100000, '\n');
         cout << "Numero errado de jogadores. Tem de ser entre 2 e 4! " << endl;
         cout << "Quantos jogadores? ";
         cin >> size;
@@ -312,9 +305,9 @@ int main()
         {
             int flg = 0;
             cout << "Jogador " << i + 1 << " --------------" << endl;
-            nice.Print_Board();
+            po.Print_Board();
             Vez(p[i], po);
-            nice.Print_Board();
+            po.Print_Board();
             Vez(p[i], po);
             if (po.Get_Size() > 2)
             {
@@ -326,8 +319,7 @@ int main()
             {
                 p[i].SetHand(po.Give_Tile(i));
             }
-            nice.Build_Board();
-            nice.Print_Board();
+            po.Print_Board();
             end_con = p[i].Get_H_Size() + end_con;
         }
 
