@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <windows.h>
 using namespace std;
 
 
@@ -26,14 +27,12 @@ public:
     void open_file();                     //FILE OPENING
     void split_string();                  //SLICING THE FILE LINES BY WHITESPACES
     void board_input_init();              //INITIALIZING board_input VECTOR WITH THE DESIRED SPACE board_input[number of file lines][4]
-    void test();                          //TEST FUNCTION
     void board_size();                    //LINE 1 OF THE FILE CONTAINS THE BOARD SIZE
     void Build_Board();                   //INITIALIZE THE BOARD MATRIX WITH THE FILE WORDS
     void storage_init();                  //INITIALIZING THE VECTOR WITH THE DESIRED SPACE storage[rows+1][col+1] each char initially == ' '
     void Fill_Cord();                     //FILL CORD 0 with coords using ascii AND ROWS USING ASCII
     void Print_Board() const;             //FUNCTION TO PRINT THE BOARD
-    void matrix_copy();                   //COPY OF THE MATRIX TO CHECK WHETHER OR NOT ALTERATIONS HAVE BEEN DONE
     bool complete_word();                 //CHECK WHETHER OR NOT A WORD HAS BEEN COMPLETED
     void vectors();
-    void vector_test();
+    void matrix_copy();
 };
