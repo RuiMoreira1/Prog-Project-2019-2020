@@ -16,7 +16,7 @@ void text_color(string text, int color) {
 void BOARD::open_file() {
     string line;
     string user_file;
-    cout << "File location:" << endl;
+    cout << "Board information file location:" << endl;
     cin >> user_file;
     try {
         fstream file(user_file.c_str(), ios::in);
