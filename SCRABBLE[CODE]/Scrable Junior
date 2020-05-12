@@ -293,6 +293,10 @@ int main()
             break;
         }
     }
+    for (int i = 0; i < size; i++)
+    {
+        p[i].SetNum(i + 1);
+    }
     int end_con = 0;
     for (int i = 0; i < size; i++)
     {
@@ -309,21 +313,38 @@ int main()
             Vez(p[i], po);
             po.Print_Board();
             Vez(p[i], po);
-            if (po.Get_Size() > 2)
+            if (po.Get_Size() >= 2)
             {
                 p[i].SetHand(po.Give_Tile(i));
                 p[i].SetHand(po.Give_Tile(i));
                 flg = 1;
             }
-            if (po.Get_Size() > 1 && flg == 0)
+            if (po.Get_Size() >= 1 && flg == 0)
             {
                 p[i].SetHand(po.Give_Tile(i));
             }
             po.Print_Board();
             end_con = p[i].Get_H_Size() + end_con;
+            cout << end_con << endl;
         }
 
 
     }
+    cout << endl;
+    cout << "Score:" << endl;
+    cout << "Player:   -     Tokens" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Player " << p[i].GetNum() << "   -    " << p[i].GetTokens() << endl;
+    }
+    int win = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (p[i].GetTokens() > p[win].GetTokens())
+        {
+            win = i;
+        }
+    }
+    cout << "Player " << p[win].GetNum() << " ganhou com " << p[win].GetTokens() << "!" << endl;
     return 0;
 }
