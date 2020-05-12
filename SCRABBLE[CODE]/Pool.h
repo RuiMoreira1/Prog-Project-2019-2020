@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <time.h>  
-#include <stdlib.h> 
+#include <time.h>
+#include <stdlib.h>
 #include "BOARD.h"
 using namespace std;
 
@@ -30,9 +30,12 @@ public:
     int Get_Size_w() const;
     int Get_w_Size(int num) const;
     void Vector_Copy();
-    void Set_to_Hash(int word_n, int letter);
+    void Set_to_Hash(int word_n, int letter, string player_coor);
     void Add_to_Pool(char x);
     void Set_All(vector<int> v);
+    void init_class();
+    void Print_Board();
+    void test();
 private:
     vector<char> tiles;
     vector<int> ini_coor1;
@@ -45,4 +48,5 @@ private:
     vector<vector<int>> all_coor1;
     vector<vector<int>> all_coor2;
     vector<vector<int>> All_Things;
+    BOARD var;
 };
