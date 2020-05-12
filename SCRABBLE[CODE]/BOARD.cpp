@@ -4,6 +4,13 @@ using namespace std;
 
 
 
+void text_color(string text,int color) {
+    HANDLE hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+    cout << text;
+}
+
 //Reading file line by line and inserting each line into a vector, if the file can´t be opened it throws an exception!!!
 //TENS DE ALTERAR O PATH DO TEU FICHEIRO !!!!!!!!
 void BOARD::open_file() {
@@ -46,12 +53,6 @@ void BOARD::split_string(){
     }
 }
 
-//TEST FUNCTION [DELETED] WHEN DELIVERING THE PROJECT
-void BOARD::test(){
-    for(vector<string> &it : board_input){
-        cout << it[0] << " " << it[1] << " " << it[2] << " " << endl;
-    }
-};
 
 
 //BOARD ROWS AND COLUMNS
@@ -60,8 +61,6 @@ void BOARD::board_size(){
     s >> rows;
     stringstream s2(board_input[0][2]);
     s2 >> columns;
-    cout << board_input[1][2] << endl;
-
 }
 
 //INITIALIZE THE VECTOR FOR THE BOARD
@@ -69,9 +68,13 @@ void BOARD::storage_init(){
     storage.assign(rows+1,vector<char>(columns+1,' '));
 }
 
+void BOARD::matrix_copy(){
+    storage_copy.assign(storage.begin(),storage.end());
+}
+
 //FILL THE ROW 0 AND COL 0 WITH THE COORDINATES USING ASCII
 void BOARD::Fill_Cord(){
-    storage[0][0] = '#';
+    storage[0][0] = '!';
     for(int i = 1; i < columns+1; i++){
         storage[0][i] = column_board;
         column_board += 1;
@@ -89,10 +92,12 @@ void BOARD::Print_Board() const{
             cout << "|";
         else cout << " ";
         for(int j = 0; j < columns+1; j++){
-            /*if(storage_copy[i][j] == '#'){
-                cout << " " << storage[i][j] << " |"; // IF THE LETTER WAS CHANGED PRINT IT IN another colour!!!
-            }*/
-            cout << " " << storage[i][j] << " |";
+            if(storage_copy[i][j] == '#'){
+                cout << " ";
+                text_color(string(1,storage[i][j]),4);
+                text_color(" |",7);                                     // IF THE LETTER WAS CHANGED PRINT IT IN another colour!!!
+            }
+            else cout << " " << storage[i][j] << " |";
         }
         cout << endl;
     }
@@ -116,12 +121,6 @@ void BOARD::Build_Board() {
     }
 }
 
-
-//PARA FAZERES FRIEND CLASS E USARES O VETOR EM PRINCIPIO DEVES TER DO ALOCAR PARA ELE NÃO SE PERDER
-void BOARD::matrix_copy(){
-    storage_copy.assign(storage.begin(),storage.end()); //A copy of the matrix to be able to detected if the letter was changed by the user
-                                                                  // and to check whether or not the word has been completed
-}
 
 //Check if the a word has been completed
 bool BOARD::complete_word(){
@@ -163,6 +162,3 @@ void BOARD::vectors(){
     }
 }
 
-void BOARD::vector_test() {
-    cout << coords[0].first << endl;
-}
