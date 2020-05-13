@@ -10,6 +10,37 @@
 #include "Pool.h"
 using namespace std;
 
+void Crossed_Words(Pool po, vector<vector<int>>& crossed)
+{
+    int in = 0;
+    for (int i = 0; i < po.Get_Size_w(); i++)
+    {
+        for (int a = 0; a < po.Get_Size_w(); a++)
+        {
+            if (a == i)
+            {
+                break;
+            }
+            if (po.Get_direc(i) != po.Get_direc(a))
+            {
+                for (int y = 0; y < po.Get_w_Size(i); y++)
+                {
+                    for (int z = 0; z < po.Get_w_Size(a); z++)
+                    {
+                        if (po.Get_all_coor1(i, y) == po.Get_all_coor1(a, z) && po.Get_all_coor2(i, y) == po.Get_all_coor2(a, z))
+                        {
+                            crossed.push_back(vector<int>());
+                            crossed[in].push_back(po.Get_all_coor1(i, y));
+                            crossed[in].push_back(po.Get_all_coor2(i, y));
+                            crossed[in].push_back(i);
+                            in = in + 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 void Translate(vector<int>& v, string g)
 {
     vector<char> ABC = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
@@ -200,6 +231,10 @@ bool Play_Possibility(Player p, Pool po)
 }
 void Vez(Player& y, Pool& p)
 {
+    if (Play_Possibility(y, p) == false && p.Get_Size() == 0)
+    {
+        return;
+    }
     while (Play_Possibility(y, p) == false)
     {
         p.Add_to_Pool(y.GetHand(0));
@@ -254,7 +289,7 @@ void Vez(Player& y, Pool& p)
 
 }
 int main()
-{
+{   
     Pool po;
     Player p1, p2, p3, p4;
     vector<Player> p = { p1, p2, p3, p4 };
@@ -266,6 +301,17 @@ int main()
     po.Form_direc();
     po.Form_all_coor();
     po.Vector_Copy();
+    vector<vector<int>> crossed;
+    vector<char> rep_letters;
+    Crossed_Words(po, crossed);
+    cout << "Cross: " << crossed.size() << endl;
+    for (int i = 0; i < crossed.size(); i++)
+    {
+        vector<int> local_wo = {crossed[i][2]};
+        rep_letters.push_back(Letter_Finder(local_wo, crossed[i], po));
+    }
+    po.Remove_Targeted_Tiles(rep_letters);
+    cout << po.Get_Size() << endl;
     cout << "Quantos jogadores? " << endl;
     cin >> size;
     while (!cin || ((size > 4) || (size < 2)))
@@ -323,7 +369,6 @@ int main()
             {
                 p[i].SetHand(po.Give_Tile(i));
             }
-            po.Print_Board();
             end_con = p[i].Get_H_Size() + end_con;
             cout << end_con << endl;
         }
