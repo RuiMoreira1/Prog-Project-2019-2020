@@ -36,6 +36,7 @@ public:
     void init_class();
     void Print_Board();
     void test();
+    void Remove_Targeted_Tiles(vector<char> target);
 private:
     vector<char> tiles;
     vector<int> ini_coor1;
