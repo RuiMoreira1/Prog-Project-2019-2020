@@ -9,39 +9,7 @@
 #include "Player.h"
 #include "Pool.h"
 using namespace std;
-
-void Crossed_Words(Pool po, vector<vector<int>>& crossed)
-{
-    int in = 0;
-    for (int i = 0; i < po.Get_Size_w(); i++)
-    {
-        for (int a = 0; a < po.Get_Size_w(); a++)
-        {
-            if (a == i)
-            {
-                break;
-            }
-            if (po.Get_direc(i) != po.Get_direc(a))
-            {
-                for (int y = 0; y < po.Get_w_Size(i); y++)
-                {
-                    for (int z = 0; z < po.Get_w_Size(a); z++)
-                    {
-                        if (po.Get_all_coor1(i, y) == po.Get_all_coor1(a, z) && po.Get_all_coor2(i, y) == po.Get_all_coor2(a, z))
-                        {
-                            crossed.push_back(vector<int>());
-                            crossed[in].push_back(po.Get_all_coor1(i, y));
-                            crossed[in].push_back(po.Get_all_coor2(i, y));
-                            crossed[in].push_back(i);
-                            in = in + 1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-void Translate(vector<int>& v, string g)
+void Translate(vector<int>& v, string g) //Traduz as coordenadas do jogador e traduz em numeros
 {
     vector<char> ABC = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
     vector<char> abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm','n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
@@ -61,7 +29,7 @@ void Translate(vector<int>& v, string g)
     }
 
 }
-void Find_Word(vector<int>& v, vector<int> v2, Pool po)
+void Find_Word(vector<int>& v, vector<int> v2, Pool po) //Com o vector w descofre qual o  indice da palavra
 {
     for (int i = 0; i < po.Get_Size_w(); i++)
     {
@@ -74,7 +42,7 @@ void Find_Word(vector<int>& v, vector<int> v2, Pool po)
         }
     }
 }
-bool Valid_Play(vector<int> word, vector<int> coor, Pool po)
+bool Valid_Play(vector<int> word, vector<int> coor, Pool po) //Identifica se as coordenadas são validas na palavra
 {
     int d = 0;
     vector<int> v;
@@ -118,7 +86,7 @@ bool Valid_Play(vector<int> word, vector<int> coor, Pool po)
     return false;
 
 }
-char Letter_Finder(vector<int> v, vector<int> coor, Pool po)
+char Letter_Finder(vector<int> v, vector<int> coor, Pool po) //Da return a letra de uma palavra
 {
     char letter;
     int st = 0;
@@ -136,7 +104,7 @@ char Letter_Finder(vector<int> v, vector<int> coor, Pool po)
         }
     }
 }
-bool Hand_Cheacker(vector<int> v, vector<int> coor, Pool p, Player pr)
+bool Hand_Cheacker(vector<int> v, vector<int> coor, Pool p, Player pr) //Verifica se a Hand tem a letra escolhida
 {
     for (int i = 0; i < pr.Get_H_Size(); i++)
     {
@@ -147,7 +115,7 @@ bool Hand_Cheacker(vector<int> v, vector<int> coor, Pool p, Player pr)
     }
     return false;
 }
-bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po)
+bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po) //Check se as coordenadas acertam em letras
 {
 
     if (word.size() == 0)
@@ -159,7 +127,7 @@ bool Check_Coor(vector<int>& word, vector<int> vf, Player p, Pool po)
         return true;
     }
 }
-void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p, string player_coor)
+void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p, string player_coor) //Mete as Coordenadas em hash
 {
     for (int i = 0; i < word.size(); i++)
     {
@@ -168,12 +136,11 @@ void Hash_Helper(vector<int> word, vector<int> coor, Pool& po, Player p, string 
             if (po.Get_all_coor1(word[i], a) == coor[0] && po.Get_all_coor2(word[i], a) == coor[1])
             {
                 po.Set_to_Hash(word[i], a, player_coor);
-                // Remove The tile from hand
             }
         }
     }
 }
-void Check_Completion(vector<int> words, Player& p, Pool po)
+void Check_Completion(vector<int> words, Player& p, Pool po) //Ve se a palavra esta completa
 {
     for (int i = 0; i < words.size(); i++)
     {
@@ -193,7 +160,7 @@ void Check_Completion(vector<int> words, Player& p, Pool po)
         }
     }
 }
-bool Play_Possibility(Player p, Pool po)
+bool Play_Possibility(Player p, Pool po) //Ve se é possivel jogar com as peças do jogador
 {
     vector<char> v;
     for (int i = 0; i < po.Get_Size_w(); i++)
@@ -210,10 +177,6 @@ bool Play_Possibility(Player p, Pool po)
         }
 
     }
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i] << " ";
-    }
     cout << endl;
     for (int i = 0; i < p.Get_H_Size(); i++)
     {
@@ -229,10 +192,11 @@ bool Play_Possibility(Player p, Pool po)
     return false;
 
 }
-void Vez(Player& y, Pool& p)
+void Vez(Player& y, Pool& p) //Trata do turno do jogador
 {
     if (Play_Possibility(y, p) == false && p.Get_Size() == 0)
     {
+        cout << "Turned skipped" << endl;
         return;
     }
     while (Play_Possibility(y, p) == false)
@@ -243,29 +207,23 @@ void Vez(Player& y, Pool& p)
         cout << "A hand foi mudada" << endl;
 
     }
-    for (int i = 0; i < p.Get_Size_w(); i++)
-    {
-        cout << p.Get_word_copy(i) << " ";
-    }
-    cout << endl;
     cout << "As pecas do jogador sao:" << endl;
     for (int i = 0; i < y.Get_H_Size(); i++)
     {
         cout << y.GetHand(i) << " ";
     }
     cout << '\n';
-    string player_coor;
-    vector<int> tranlated;
-    cout << "Onde quer jogar? " << endl;
+    string player_coor; //variavel com as coordenadas do jogador em letras
+    vector<int> tranlated; //vetor com as coordenadas traduzidas
+    cout << "Onde quer jogar?(linha/coluna) " << endl;
     cin >> player_coor;
     Translate(tranlated, player_coor);
     vector<int> word;
     Find_Word(word, tranlated, p);
-    cout << tranlated[0] << tranlated[1] << endl;
     while (Check_Coor(word, tranlated, y, p) == false || Letter_Finder(word, tranlated, p) == '#' || Valid_Play(word, tranlated, p) == false || Hand_Cheacker(word, tranlated, p, y) != true)
     {
         cout << "Cordenadas invalidas!" << endl;
-        cout << "Onde quer jogar? ";
+        cout << "Onde quer jogar?(linha/coluna) " << endl;
         cin >> player_coor;
         tranlated = {};
         Translate(tranlated, player_coor);
@@ -284,12 +242,20 @@ void Vez(Player& y, Pool& p)
         }
         Hash_Helper(word, tranlated, p, y, player_coor);
         Check_Completion(word, y, p);
-        p.Set_All(tranlated);
     }
 
 }
 int main()
-{   
+{
+    cout << "Jogo de Scrable Junior:" << endl;
+    cout << "Para 2 a 4 jogadores." << endl;
+    cout << "Regras:" << endl;
+    cout << "Para comecar o jogo tem de indicar a localizacao do ficheiro de construcao do BOARD" << endl;
+    cout << "Atraves dos seus turnos, os jogadores tem uma seleção de letras que podem escolher e jogar no tabuleiro" << endl;
+    cout << "A letra no tabuleiro pode ser selecionada atraves das suas coordenadas(linhas,colunas). As linhas sao representadas por letras maiusculas" << endl;
+    cout << "e as colunas sao representados por letras minusculas." << endl;
+    cout << "Palavras so podem ser completadas por ordem e pontos sao atribuidos a quem acabe uma palavra." << endl;
+    cout << "O jogo acaba quando todas as letras forem selecionadas, ganha quem tiver mais pontos" << endl;
     Pool po;
     Player p1, p2, p3, p4;
     vector<Player> p = { p1, p2, p3, p4 };
@@ -301,17 +267,6 @@ int main()
     po.Form_direc();
     po.Form_all_coor();
     po.Vector_Copy();
-    vector<vector<int>> crossed;
-    vector<char> rep_letters;
-    Crossed_Words(po, crossed);
-    cout << "Cross: " << crossed.size() << endl;
-    for (int i = 0; i < crossed.size(); i++)
-    {
-        vector<int> local_wo = {crossed[i][2]};
-        rep_letters.push_back(Letter_Finder(local_wo, crossed[i], po));
-    }
-    po.Remove_Targeted_Tiles(rep_letters);
-    cout << po.Get_Size() << endl;
     cout << "Quantos jogadores? " << endl;
     cin >> size;
     while (!cin || ((size > 4) || (size < 2)))
