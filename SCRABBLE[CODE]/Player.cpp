@@ -13,31 +13,31 @@ Player::Player()
 {
 
 }
-void Player::SetHand(char tile)
+void Player::SetHand(char tile) // função para atribuir peças
 {
     hand.push_back(tile);
 }
-char Player::GetHand(int num) const
+char Player::GetHand(int num) const // função para obter a mão do jogador
 {
     return hand[num];
 }
-void Player::SetNum(int d)
+void Player::SetNum(int d) // função para atribuir o numero do jogador
 {
     description = d;
 }
-int Player::GetNum() const
+int Player::GetNum() const // função para obter o numero do jogador
 {
     return description;
 }
-void Player::SetToken(int points)
+void Player::SetToken(int points) // função para atribuir os pontos do jogador
 {
     token = points;
 }
-int Player::GetTokens() const
+int Player::GetTokens() const // função para obter os pontos do jogador
 {
     return token;
 }
-int Player::Get_H_Size() const
+int Player::Get_H_Size() const // função para obter o tamanho da mão do jogador
 {
     return hand.size();
 }
