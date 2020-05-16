@@ -1,11 +1,11 @@
 #include "Pool.h"
 
 
-Pool::Pool()
+Pool::Pool() //constructor
 {
 
 }
-void Pool::init_class() {
+void Pool::init_class() {   //Inicia o BOARD
     var.open_file();
     var.board_input_init();
     var.split_string();
@@ -17,21 +17,21 @@ void Pool::init_class() {
     var.vectors();
     var.Print_Board();
 }
-void Pool::Print_Board() {
+void Pool::Print_Board() {  //Print do Board
     var.Print_Board();
 };
-void Pool::FormPool()
-{
-    for (int i = 0; i < var.soup.size(); i++)
-    {
-        tiles.push_back(var.soup[i]);
+void Pool::FormPool() { //Forma a pool com as letras das palavras
+    for (int i = 1; i < var.storage.size(); i++) {
+        for (int j = 1; j < var.storage[i].size(); j++) {
+            if (var.storage[i][j] != ' ') tiles.push_back(var.storage[i][j]);
+        }
     }
 }
 char Pool::GetTiles(int num) const
 {
     return tiles[num];
 }
-void Pool::Form_init_coor()
+void Pool::Form_init_coor() //Forma as coordenadas iniciais
 {
     for (int i = 0; i < var.coords.size(); i++)
     {
@@ -39,7 +39,7 @@ void Pool::Form_init_coor()
         ini_coor2.push_back(var.coords[i].second);
     }
 }
-int Pool::Get_init_coor1(int num) const
+int Pool::Get_init_coor1(int num) const 
 {
     return ini_coor1[num];
 }
@@ -47,14 +47,14 @@ int Pool::Get_init_coor2(int num) const
 {
     return ini_coor2[num];
 }
-void Pool::Form_word()
+void Pool::Form_word() //Forma o vetor de words
 {
     for (int i = 0; i < var.words.size(); i++)
     {
         w.push_back(var.words[i]);
     }
 }
-string Pool::Get_word(int num) const
+string Pool::Get_word(int num) const 
 {
     return w[num];
 }
@@ -62,7 +62,7 @@ string Pool::Get_word_copy(int num) const
 {
     return w_copy[num];
 }
-void Pool::Form_direc()
+void Pool::Form_direc() //Form o vector com direçoes 
 {
     for (int i = 0; i < var.direction.size(); i++)
     {
@@ -73,14 +73,14 @@ string Pool::Get_direc(int num) const
 {
     return dire[num];
 }
-void Pool::Vector_Copy()
+void Pool::Vector_Copy() //Form o vector w_copy
 {
     for (int i = 0; i < w.size(); i++)
     {
         w_copy.push_back(w[i]);
     }
 }
-void Pool::Form_all_coor()
+void Pool::Form_all_coor() //Form o vector de todas as coordenadas all_coor1, all_coor2
 {
     for (int i = 0; i < w.size(); i++)
     {
@@ -112,13 +112,6 @@ void Pool::Form_all_coor()
     }
 
 }
-void Pool::Set_All(vector<int> v)
-{
-    All_Things.push_back(vector<int>());
-    All_Things[All_Things.size() - 1].push_back(v[0]);
-    All_Things[All_Things.size() - 1].push_back(v[0]);
-
-}
 int Pool::Get_all_coor1(int word, int num) const
 {
     return all_coor1[word][num];
@@ -127,7 +120,7 @@ int Pool::Get_all_coor2(int word, int num) const
 {
     return all_coor2[word][num];
 }
-char Pool::Give_Tile(int num)
+char Pool::Give_Tile(int num) //Usa random para dar uma peça a hand e remove da tiles
 {
     int rt;
     char temp;
