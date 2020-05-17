@@ -151,17 +151,3 @@ void Pool::Set_to_Hash(int word_n, int letter, string player_coor)
     w_copy[word_n][letter] = '#';
     var.storage_copy[player_coor[0] - 64][player_coor[1] - 96] = '#';
 }
-void Pool::Remove_Targeted_Tiles(vector<char> target)
-{
-    for (int i = 0; i < target.size(); i++)
-    {
-        for (int a = 0; a < tiles.size(); a++)
-        {
-            if (tiles[a] == target[i])
-            {
-                tiles.erase(tiles.begin() + a);
-                break;
-            }
-        }
-    }
-}
