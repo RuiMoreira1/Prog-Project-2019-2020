@@ -32,11 +32,8 @@ public:
     void Vector_Copy(); //Copia o vector
     void Set_to_Hash(int word_n, int letter, string player_coor); //Mete uma letra em # no vector w_copy
     void Add_to_Pool(char x); //Adiciona as tiles
-    void Set_All(vector<int> v); 
     void init_class(); //inicia a classe
     void Print_Board(); //Print do BOARD
-    void test();
-    void Remove_Targeted_Tiles(vector<char> target); //remove tiles atraves do indice
 private:
     vector<char> tiles; //Vetor com as peças
     vector<int> ini_coor1; //Coordenadas iniciais com linha
