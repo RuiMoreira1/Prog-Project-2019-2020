@@ -11,23 +11,8 @@
 using namespace std;
 void Translate(vector<int>& v, string g) //Traduz as coordenadas do jogador e traduz em numeros
 {
-    vector<char> ABC = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-    vector<char> abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm','n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-    for (int i = 0; i < abc.size(); i++)
-    {
-        if (g[0] == ABC[i])
-        {
-            v.push_back(i + 1);
-        }
-    }
-    for (int a = 0; a < abc.size(); a++)
-    {
-        if (g[1] == abc[a])
-        {
-            v.push_back(a + 1);
-        }
-    }
-
+    v.push_back((int)g[0] - 64);
+    v.push_back((int)g[1] - 96);
 }
 void Find_Word(vector<int>& v, vector<int> v2, Pool po) //Com o vector w descofre qual o  indice da palavra
 {
@@ -217,6 +202,8 @@ void Vez(Player& y, Pool& p) //Trata do turno do jogador
     vector<int> tranlated; //vetor com as coordenadas traduzidas
     cout << "Onde quer jogar?(linha/coluna) " << endl;
     cin >> player_coor;
+    cin.clear();
+    cin.ignore(120891, '\n');
     Translate(tranlated, player_coor);
     vector<int> word;
     Find_Word(word, tranlated, p);
@@ -229,6 +216,8 @@ void Vez(Player& y, Pool& p) //Trata do turno do jogador
         Translate(tranlated, player_coor);
         word = {};
         Find_Word(word, tranlated, p);
+        cin.clear();
+        cin.ignore(120891, '\n');
     }
     if (Valid_Play(word, tranlated, p) == true)
     {
@@ -243,7 +232,6 @@ void Vez(Player& y, Pool& p) //Trata do turno do jogador
         Hash_Helper(word, tranlated, p, y, player_coor);
         Check_Completion(word, y, p);
     }
-
 }
 int main()
 {
@@ -325,7 +313,6 @@ int main()
                 p[i].SetHand(po.Give_Tile(i));
             }
             end_con = p[i].Get_H_Size() + end_con;
-            cout << end_con << endl;
         }
 
 
