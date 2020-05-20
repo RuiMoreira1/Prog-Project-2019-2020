@@ -35,8 +35,6 @@ private:
     vector<char> tiles; //Vetor com as peças
     vector<int> ini_coor1; //Coordenadas iniciais com linha
     vector<int> ini_coor2; //Coordenadas iniciais com coluna
-    vector<int> fin_coor1;
-    vector<int> fin_coor2;
     vector<string> w; //Vector de words
     vector<string> w_copy; //Vector de words copia
     vector<string> dire; //Vector com directions
