@@ -12,10 +12,6 @@ void Pool::FormPool() { //Forma a pool com as letras das palavras
         }
     }
 }
-char Pool::GetTiles(int num) const
-{
-    return tiles[num];
-}
 void Pool::Form_init_coor() //Forma as coordenadas iniciais
 {
     for (int i = 0; i < var.coords.size(); i++)
@@ -31,10 +27,6 @@ void Pool::Form_word() //Forma o vetor de words
         w.push_back(var.words[i]);
     }
 }
-string Pool::Get_word(int num) const
-{
-    return w[num];
-}
 string Pool::Get_word_copy(int num) const
 {
     return w_copy[num];
@@ -45,10 +37,6 @@ void Pool::Form_direc() //Form o vector com direçoes
     {
         dire.push_back(var.direction[i]);
     }
-}
-string Pool::Get_direc(int num) const
-{
-    return dire[num];
 }
 void Pool::Vector_Copy() //Form o vector w_copy
 {
