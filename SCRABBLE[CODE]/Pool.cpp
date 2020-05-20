@@ -115,4 +115,4 @@ void Pool::Set_to_Hash(int word_n, int letter, string player_coor)
 {
     w_copy[word_n][letter] = '#';
     var.storage_copy[player_coor[0] - 64][player_coor[1] - 96] = '#';
-}
+} 
