@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Pool.h"
 using namespace std;
+
 void Translate(vector<int>& v, string g) //Traduz as coordenadas do jogador e traduz em numeros
 {
     v.push_back((int)g[0] - 64);
@@ -207,7 +208,7 @@ void Vez(Player& y, Pool& p) //Trata do turno do jogador
     Translate(tranlated, player_coor);
     vector<int> word;
     Find_Word(word, tranlated, p);
-    while (Check_Coor(word, tranlated, y, p) == false || Letter_Finder(word, tranlated, p) == '#' || Valid_Play(word, tranlated, p) == false || Hand_Cheacker(word, tranlated, p, y) != true)
+    while (!cin || player_coor.length() != 2 || Check_Coor(word, tranlated, y, p) == false || Letter_Finder(word, tranlated, p) == '#' || Valid_Play(word, tranlated, p) == false || Hand_Cheacker(word, tranlated, p, y) != true)
     {
         cout << "Cordenadas invalidas!" << endl;
         cout << "Onde quer jogar?(linha/coluna) " << endl;
@@ -248,7 +249,6 @@ int main()
     Player p1, p2, p3, p4;
     vector<Player> p = { p1, p2, p3, p4 };
     size_t size;
-    po.init_class(); //Initializing class members
     po.FormPool();
     po.Form_init_coor();
     po.Form_word();
