@@ -13,13 +13,10 @@ class Pool {
 public:
     Pool() = default;
     void FormPool(); //Formar as peças necessárias para completar o jogo
-    char GetTiles(int num) const; // Obter uma peça
     void Form_init_coor(); //Obter as coordenadas iniciais de cada palavra
     void Form_word(); //Obter um vector com as palavras do ficheiro .txt
-    string Get_word(int num) const; //Obter a palvra atravês do indice
     string Get_word_copy(int num) const; //Obter a plavra atravês do indice, vector de words copiado e alterado
     void Form_direc(); //Foram o vector com as direções das palavras H ou V
-    string Get_direc(int num) const; // Obter a direção de uma palavra atravês do indice
     void Form_all_coor(); //Formar as coordenadas de todas as letras de todas as palavras
     int Get_all_coor1(int word, int num) const; //all_coor[1] = word, coor[1][2] = linha
     int Get_all_coor2(int word, int num) const; //all_coor[1] = word, coor[1][2] = coluna
