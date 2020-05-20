@@ -1,25 +1,10 @@
 #include "Pool.h"
 
 
-Pool::Pool() //constructor
-{
-
-}
-void Pool::init_class() {   //Inicia o BOARD
-    var.open_file();
-    var.board_input_init();
-    var.split_string();
-    var.board_size();
-    var.storage_init();
-    var.Fill_Cord();
-    var.Build_Board();
-    var.matrix_copy();
-    var.vectors();
-    var.Print_Board();
-}
 void Pool::Print_Board() {  //Print do Board
     var.Print_Board();
-};
+}
+
 void Pool::FormPool() { //Forma a pool com as letras das palavras
     for (int i = 1; i < var.storage.size(); i++) {
         for (int j = 1; j < var.storage[i].size(); j++) {
@@ -39,7 +24,7 @@ void Pool::Form_init_coor() //Forma as coordenadas iniciais
         ini_coor2.push_back(var.coords[i].second);
     }
 }
-int Pool::Get_init_coor1(int num) const 
+int Pool::Get_init_coor1(int num) const
 {
     return ini_coor1[num];
 }
@@ -54,7 +39,7 @@ void Pool::Form_word() //Forma o vetor de words
         w.push_back(var.words[i]);
     }
 }
-string Pool::Get_word(int num) const 
+string Pool::Get_word(int num) const
 {
     return w[num];
 }
@@ -62,7 +47,7 @@ string Pool::Get_word_copy(int num) const
 {
     return w_copy[num];
 }
-void Pool::Form_direc() //Form o vector com direçoes 
+void Pool::Form_direc() //Form o vector com direçoes
 {
     for (int i = 0; i < var.direction.size(); i++)
     {
