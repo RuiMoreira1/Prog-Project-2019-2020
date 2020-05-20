@@ -24,14 +24,6 @@ void Pool::Form_init_coor() //Forma as coordenadas iniciais
         ini_coor2.push_back(var.coords[i].second);
     }
 }
-int Pool::Get_init_coor1(int num) const
-{
-    return ini_coor1[num];
-}
-int Pool::Get_init_coor2(int num) const
-{
-    return ini_coor2[num];
-}
 void Pool::Form_word() //Forma o vetor de words
 {
     for (int i = 0; i < var.words.size(); i++)
