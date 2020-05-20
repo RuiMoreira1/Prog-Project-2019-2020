@@ -15,8 +15,6 @@ public:
     void FormPool(); //Formar as peças necessárias para completar o jogo
     char GetTiles(int num) const; // Obter uma peça
     void Form_init_coor(); //Obter as coordenadas iniciais de cada palavra
-    int Get_init_coor1(int num) const; //Obter a coordenada da linha(em numero) da letra de uma palavra especifica
-    int Get_init_coor2(int num) const; //Obter a coordenada da coluna(em numero) da coluna de uma palavra especifica
     void Form_word(); //Obter um vector com as palavras do ficheiro .txt
     string Get_word(int num) const; //Obter a palvra atravês do indice
     string Get_word_copy(int num) const; //Obter a plavra atravês do indice, vector de words copiado e alterado
