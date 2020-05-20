@@ -249,7 +249,6 @@ int main()
     Player p1, p2, p3, p4;
     vector<Player> p = { p1, p2, p3, p4 };
     size_t size;
-    po.init_class(); //Initializing class members
     po.FormPool();
     po.Form_init_coor();
     po.Form_word();
