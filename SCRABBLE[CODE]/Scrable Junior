@@ -334,4 +334,4 @@ int main()
     }
     cout << "Player " << p[win].GetNum() << " ganhou com " << p[win].GetTokens() << "!" << endl;
     return 0;
-}
+} 
