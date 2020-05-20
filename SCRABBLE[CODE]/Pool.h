@@ -32,7 +32,6 @@ public:
     void Vector_Copy(); //Copia o vector
     void Set_to_Hash(int word_n, int letter, string player_coor); //Mete uma letra em # no vector w_copy
     void Add_to_Pool(char x); //Adiciona as tiles
-    void init_class(); //inicia a classe
     void Print_Board(); //Print do BOARD
 private:
     vector<char> tiles; //Vetor com as peças
@@ -46,5 +45,5 @@ private:
     vector<vector<int>> all_coor1; //Todas as coordenadas atraves de words e linhas 
     vector<vector<int>> all_coor2; //Todas as coordenadas atraves de words e colunas
     vector<vector<int>> All_Things;
-    BOARD var; //var para iniciar BOARD
+    BOARD var = BOARD(var.Get_Warnings(0)); //var para iniciar BOARD
 };
